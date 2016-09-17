@@ -284,9 +284,9 @@
 			<version>1.2.11</version>
 		</dependency>
 		<dependency>
-			<groupId>sevenzip</groupId>
-			<artifactId>jbinding</artifactId>
-			<version>9.20-2.00beta</version>
+			<groupId>net.sf.sevenzipjbinding</groupId>
+        		<artifactId>sevenzipjbinding</artifactId>
+        		<version>9.20-2.00beta</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.sevenzipjbinding</groupId>
@@ -685,14 +685,14 @@
 						<artifactItem>
 							<groupId>sevenzip</groupId>
 							<artifactId>jbinding</artifactId>
-							<version>${sevenzip-version}</version>
-							<downloadUrl>http://www.spirton.com/uploads/7-Zip-JBinding/7-Zip-JBinding-{version}.{packaging}</downloadUrl>
+							<version>9.20-2.00beta</version>
+							<downloadUrl>http://repo1.maven.org/maven2/net/sf/sevenzipjbinding/sevenzipjbinding/9.20-2.00beta/sevenzipjbinding-9.20-2.00beta.jar</downloadUrl>
 						</artifactItem>
 						<artifactItem>
 							<groupId>sevenzip-allplatforms</groupId>
 							<artifactId>jbinding-allplatforms</artifactId>
-							<version>${sevenzip-version}</version>
-							<downloadUrl>http://www.spirton.com/uploads/7-Zip-JBinding/7-Zip-JBinding-AllPlatforms-{version}.{packaging}</downloadUrl>
+							<version>9.20-2.00beta</version>
+							<downloadUrl>http://repo1.maven.org/maven2/net/sf/sevenzipjbinding/sevenzipjbinding-all-platforms/9.20-2.00beta/sevenzipjbinding-all-platforms-9.20-2.00beta.jar</downloadUrl>
 						</artifactItem>
 						<artifactItem>
 							<groupId>jwbroek.cuelib</groupId>
