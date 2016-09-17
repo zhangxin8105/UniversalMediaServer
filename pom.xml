@@ -286,12 +286,12 @@
 		<dependency>
 			<groupId>sevenzip</groupId>
 			<artifactId>jbinding</artifactId>
-			<version>${sevenzip-version}</version>
+			<version>9.20-2.00beta</version>
 		</dependency>
 		<dependency>
-			<groupId>sevenzip-allplatforms</groupId>
-			<artifactId>jbinding-allplatforms</artifactId>
-			<version>${sevenzip-version}</version>
+			<groupId>net.sf.sevenzipjbinding</groupId>
+			<artifactId>sevenzipjbinding-all-platforms</artifactId>
+			<version>9.20-2.00beta</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
