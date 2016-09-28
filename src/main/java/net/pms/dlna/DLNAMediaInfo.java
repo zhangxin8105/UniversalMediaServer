@@ -137,7 +137,7 @@ public class DLNAMediaInfo implements Cloneable {
 	public String aspectRatioDvdIso;
 	public String aspectRatioContainer;
 	public String aspectRatioVideoTrack;
-	private int videoBitDepth;
+	private int videoBitDepth = 8;
 
 	private byte thumb[];
 
@@ -282,12 +282,6 @@ public class DLNAMediaInfo implements Cloneable {
 	 */
 	@Deprecated
 	public String matrixCoefficients;
-
-	/**
-	 * @deprecated Use standard getter and setter to access this variable.
-	 */
-	@Deprecated
-	public boolean embeddedFontExists = false;
 
 	/**
 	 * @deprecated Use standard getter and setter to access this variable.
@@ -786,17 +780,17 @@ public class DLNAMediaInfo implements Cloneable {
 							audio.setSampleFrequency("" + rate);
 							durationSec = (double) length;
 							bitrate = (int) ah.getBitRateAsNumber();
-							audio.getAudioProperties().setNumberOfChannels(2);
-
-							if (ah.getChannels() != null && ah.getChannels().toLowerCase().contains("mono")) {
-								audio.getAudioProperties().setNumberOfChannels(1);
-							} else if (ah.getChannels() != null && ah.getChannels().toLowerCase().contains("stereo")) {
-								audio.getAudioProperties().setNumberOfChannels(2);
-							} else if (ah.getChannels() != null) {
-								try {
-									audio.getAudioProperties().setNumberOfChannels(Integer.parseInt(ah.getChannels()));
-								} catch (NumberFormatException e) {
-									LOGGER.debug("Could not parse number of audio channels from \"{}\"", ah.getChannels());
+							audio.getAudioProperties().setNumberOfChannels(2); // set default value of channels to 2
+							String channels = ah.getChannels().toLowerCase();
+							if (!channels.isEmpty()) {
+								if (channels.equals("1") || channels.contains("mono")) { // parse value "1" or "Mono"
+									audio.getAudioProperties().setNumberOfChannels(1);
+								} else if (!(channels.equals("2") || channels.contains("stereo"))){ // this value is default so try to parse the unknown value
+									try {
+										audio.getAudioProperties().setNumberOfChannels(Integer.parseInt(channels));
+									} catch (NumberFormatException e) {
+										LOGGER.debug("Could not parse number of audio channels from \"{}\"", channels);
+									}
 								}
 							}
 
@@ -1447,7 +1441,7 @@ public class DLNAMediaInfo implements Cloneable {
 					mimeType = HTTPResource.AUDIO_OGG_TYPEMIME;
 				} else if (codecA.contains("asf") || codecA.startsWith("wm")) {
 					mimeType = HTTPResource.AUDIO_WMA_TYPEMIME;
-				} else if (codecA.contains("pcm") || codecA.contains("wav")) {
+				} else if (codecA.contains("pcm") || codecA.contains("wav") || codecA.contains("dts")) {
 					mimeType = HTTPResource.AUDIO_WAV_TYPEMIME;
 				}
 			}
@@ -1640,9 +1634,6 @@ public class DLNAMediaInfo implements Cloneable {
 			result.append(", matrix coefficients: ");
 			result.append(matrixCoefficients);
 		}
-
-		result.append(", attached fonts: ");
-		result.append(embeddedFontExists);
 
 		if (isNotBlank(fileTitleFromMetadata)) {
 			result.append(", file title from metadata: ");
@@ -2181,22 +2172,6 @@ public class DLNAMediaInfo implements Cloneable {
 
 	public void setMatrixCoefficients(String matrixCoefficients) {
 		this.matrixCoefficients = matrixCoefficients;
-	}
-
-	/**
-	 * @return whether the file container has custom fonts attached.
-	 */
-	public boolean isEmbeddedFontExists() {
-		return embeddedFontExists;
-	}
-
-	/**
-	 * Sets whether the file container has custom fonts attached.
-	 *
-	 * @param exists true if at least one attached font exists
-	 */
-	public void setEmbeddedFontExists(boolean exists) {
-		this.embeddedFontExists = exists;
 	}
 
 	public String getFileTitleFromMetadata() {

@@ -321,7 +321,9 @@ public class UPNPControl {
 			};
 
 			upnpService = new UpnpServiceImpl(sc, rl);
-			initializeSearcher();
+			for (DeviceType t : mediaRendererTypes) {
+				upnpService.getControlPoint().search(new DeviceTypeHeader(t));
+			}
 
 			LOGGER.debug("UPNP Services are online, listening for media renderers");
 		} catch (Exception ex) {

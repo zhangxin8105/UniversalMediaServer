@@ -74,7 +74,6 @@ public class MediaLibraryFolder extends VirtualFolder {
 	}
 
 	private String transformSQL(String sql) {
-
 		sql = sql.replace("${0}", transformName(getName()));
 		if (getParent() != null) {
 			sql = sql.replace("${1}", transformName(getParent().getName()));
@@ -202,6 +201,7 @@ public class MediaLibraryFolder extends VirtualFolder {
 			}
 		}
 
+		setUpdateId(this.getIntId());
 		//return removedFiles.size() != 0 || addedFiles.size() != 0 || removedString.size() != 0 || addedString.size() != 0;
 	}
 }
