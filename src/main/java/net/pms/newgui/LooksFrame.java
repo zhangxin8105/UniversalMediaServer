@@ -569,7 +569,9 @@ public class LooksFrame extends JFrame implements IFrame, Observer {
 
 	@Override
 	public void addEngines() {
-		tr.addEngines();
+		if (!configuration.getDisableTranscoding()) {
+			tr.addEngines();
+		}
 	}
 
 	// Fired on AutoUpdater state changes
